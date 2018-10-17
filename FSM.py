@@ -1,3 +1,5 @@
+from Agent import *
+
 class rules:
 
     def __init__(self, s1, s2, s, act):
@@ -16,10 +18,10 @@ class makerules(FSM):
         #REGLER LOGG PÅ
         self.add_rule(rules("s-init", "s-read", 0 - 9 or '*' or '#',  Keypad.reset_password() and Ledboard.ligth_show())) #Starter opp og lys lyser
         self.add_rule(rules("s-read", "s-verify", 0 - 9,  Keypad.password.add(input))) #Legger til et tall (input) i temp-passord
-        self.add_rule(rules("s-read", "s-verify", '*',   Keypad.check_password() and Ledboard.twinkle())) #Sjekker passord og får lys til å lyse
+        self.add_rule(rules("s-read", "s-verify", '*',   self.agent.verify_login() and Ledboard.twinkle())) #Sjekker passord og får lys til å lyse
         self.add_rule(rules("s-read", "s-init", '#',  KPC.reset_agent())) #Resetter agent
         self.add_rule(rules("s-verify", "s-init", if !Keypad.check_password(), KPC.reset_agent())) #Hvis ikke passord er rett resettes agent og vi går tilbake til start
-        self.add_rule(rules("s-verify", "s-active", if Keypad.check_password(),  KPC.activate_agent())) #Hvis passord er rett går vi videre til active og aktiverer agent
+        self.add_rule(rules("s-verify", "s-active", if self.agent.verify_login(),  KPC.activate_agent())) #Hvis passord er rett går vi videre til active og aktiverer agent
 
         #REGLER ENDRE PASSORD
         self.add_rule(rules("s-active", "s-read-2", '*', Keypad.reset_password())) #Starter å resette passord
