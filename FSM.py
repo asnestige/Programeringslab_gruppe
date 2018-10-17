@@ -13,37 +13,6 @@ class rules:
     # 3. signal - triggering signal
     # 4. action - the agent will be instructed to perform this action if this rule fires.
 
-class makerules(FSM):
-    def __init__(self):
-        #REGLER LOGG PÅ
-        self.add_rule(rules("s-init", "s-read", 0 - 9 or '*' or '#',  Keypad.reset_password() and Ledboard.ligth_show())) #Starter opp og lys lyser
-        self.add_rule(rules("s-read", "s-verify", 0 - 9,  Keypad.password.add(input))) #Legger til et tall (input) i temp-passord
-        self.add_rule(rules("s-read", "s-verify", '*',   self.agent.verify_login() and Ledboard.twinkle())) #Sjekker passord og får lys til å lyse
-        self.add_rule(rules("s-read", "s-init", '#',  KPC.reset_agent())) #Resetter agent
-        self.add_rule(rules("s-verify", "s-init", if !Keypad.check_password(), KPC.reset_agent())) #Hvis ikke passord er rett resettes agent og vi går tilbake til start
-        self.add_rule(rules("s-verify", "s-active", if self.agent.verify_login(),  KPC.activate_agent())) #Hvis passord er rett går vi videre til active og aktiverer agent
-
-        #REGLER ENDRE PASSORD
-        self.add_rule(rules("s-active", "s-read-2", '*', Keypad.reset_password())) #Starter å resette passord
-        self.add_rule(rules("s-read-2", "s-read-2", 0 - 9,  Keypad.password.add(input))) #Skriver inn tall som blir en del av nytt passord
-        self.add_rule(rules("s-read-2", "s-active", '#' or '*', KPC.refresh()))  #Hvis ikke går vi tilbake til active
-        self.add_rule(rules("s-read-3", "s-read-3", 0 - 9, Keypad.password.add(input)))  # Legger til enda et tall i nytt passord
-        self.add_rule(rules("s-read-3", "s-active", '#', KPC.refresh())) #Skriver vi noe annet enn 0-9 eller * går vi ut og tilbake til active
-        self.add_rule(rules("s-read-3", "s-active", '*', Keypad.cach(new_password)))  # Cacher det nye passordet
-
-        #REGLER STYRE LYS
-        self.add_rule(rules("s-active", "s-ledligth", 0 - 5, Ledboard.saveNumber(input))) #Skriver inn et tall og kan gjøre denne mange ganger
-        #Hva skjer om vi skriver inn 6 - 9 ??
-        self.add_rule(rules("s-ledligth", "s-ledligth", 0 - 9, Ledboard.saveLength(input)))
-        self.add_rule(rules("s-ledligth", "s-active", '*', Ledboard.ligth()) #S
-        self.add_rule(rules("s-ledligth", "s-active", '#', KPC.saveNumber(input) = 0 and KPC.saveLength(input) = 0))
-
-        #REGLER LOGG AV
-        # self.add_rule(rules("s-active", "s-logout", '#', nothing)) #Hvis vi skrive # går vi inn i logout (?)
-        # self.add_rule(rules("s-logout", "s-active", 0 - 9 or '*', nothing)) #Tilbake i active (?)
-        self.add_rule(rules("s-active", "s-init", '#',Ledboard.ligth_show()))  # Skriver # blir det lysshow og vi logger av, går tilbake
-
-
 class FSM:
 
     def __init__(self, agent):
@@ -77,16 +46,6 @@ class FSM:
 #use the consequent of a rule to a) set the next state of the FSM, and b) call the appropriate
 #agent action method.
 
-
-
-
-
-
-
-
-
-
-
 # Key methods for the FSM include:
 #• add rule - add a new rule to the end of the FSM’s rule list.
 #• get next signal - query the agent for the next signal.
@@ -96,3 +55,39 @@ class FSM:
 #agent action method.
 #• main loop - begin in the FSM’s default initial state and then repeatedly call get next signal and
 #run rules until the FSM enters its default final state.
+
+class makerules(FSM):
+    def __init__(self, agent):
+        super(FSM, self).__init__(agent)
+        all_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '#']
+        number_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        ligth_input = ['0', '1', '2', '3', '4', '5']
+        star_input = ['*']
+        squere_input = ['#']
+        char_input = ['*', '#']
+
+        #REGLER LOGG PÅ
+        self.add_rule(rules("s-init", "s-read", all_input,  self.agent.reset_password() and self.agent.flash_leds())) #Starter opp og lys lyser
+        self.add_rule(rules("s-read", "s-verify", number_input,  self.agent.password.add(input))) #Legger til et tall (input) i temp-passord
+        self.add_rule(rules("s-read", "s-verify", star_input,   self.agent.verify_login() and self.agent.twinkle_leds())) #Sjekker passord og får lys til å lyse
+        self.add_rule(rules("s-read", "s-init", squere_input,  self.agent.reset_agent())) #Resetter agent
+        self.add_rule(rules("s-verify", "s-init", if not self.agent.check_password(), self.agent.reset_agent())) #Hvis ikke passord er rett resettes agent og vi går tilbake til start
+        self.add_rule(rules("s-verify", "s-active", if self.agent.verify_login(),  self.agent.activate_agent())) #Hvis passord er rett går vi videre til active og aktiverer agent
+
+        #REGLER ENDRE PASSORD
+        self.add_rule(rules("s-active", "s-read-2", star_input, self.agent.reset_password())) #Starter å resette passord
+        self.add_rule(rules("s-read-2", "s-read-2", number_input,  self.agent.password.add(input))) #Skriver inn tall som blir en del av nytt passord
+        self.add_rule(rules("s-read-2", "s-active", char_input, self.agent.refresh()))  #Hvis ikke går vi tilbake til active
+        self.add_rule(rules("s-read-3", "s-read-3", number_input, self.agent.password.add(input)))  # Legger til enda et tall i nytt passord
+        self.add_rule(rules("s-read-3", "s-active", squere_input, self.agent.refresh())) #Skriver vi noe annet enn 0-9 eller * går vi ut og tilbake til active
+        self.add_rule(rules("s-read-3", "s-active", star_input, self.agent.cach(new_password)))  # Cacher det nye passordet
+
+        #REGLER STYRE LYS
+        self.add_rule(rules("s-active", "s-ledligth", ligth_input, self.agent.set_led_id(input))) #Skriver inn et tall og kan gjøre denne mange ganger
+        #Hva skjer om vi skriver inn 6 - 9 ??
+        self.add_rule(rules("s-ledligth", "s-ledligth", number_input, self.agent.set_led_time(input)))
+        self.add_rule(rules("s-ledligth", "s-active", star_input, self.agent.light_one_led())) #Lyser rett led lys
+        self.add_rule(rules("s-ledligth", "s-active", squere_input, self.agent.set_led_id(None) and self.agent.set_led_time(None))) #Er dette nødvendig?
+
+        #REGLER LOGG AV
+        self.add_rule(rules("s-active", "s-init", '#', self.agent.flash_leds()))  # Skriver # blir det lysshow og vi logger av, går tilbake

@@ -47,6 +47,11 @@ class Agent:
 
     #def check_password
 
+    def set_led_id(self, led_id):
+        self.led_id = led_id
+
+    def set_led_time(self, led_time):
+        self.led_time = led_time
 
     def light_one_led(self):
         self.led_board.light_led(self.led_id, self.led_time)
