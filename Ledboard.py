@@ -26,12 +26,6 @@ class Ledboard:
     def twinkle_all_leds(self,k):
         return
 
-
-
-
-
-
-
     def set_pin(pin_index, pin_state):
         if pin_state == -1:
             GPIO.setup(pins[pin_index], GPIO.IN)
