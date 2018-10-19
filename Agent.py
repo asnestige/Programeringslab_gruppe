@@ -2,7 +2,7 @@ from Keypad import Keypad as keypad
 from Ledboard import Ledboard as led
 
 class Agent:
-    def __init__(self, keypad, led_board, passcode_buffer, pathname, Lid, Ldur):
+    def __init__(self, keypad, led_board, temp_password, pathname, Lid, Ldur):
         self.keypad = keypad #a pointer to the keypad
         self.led_board = led_board #pointer to the LED Board
         self.temp_password = temp_password
@@ -76,7 +76,7 @@ class Agent:
         self.led_id = self.get_next_signal() #Setter id til det vi har trykket på keypaden
 
     def set_led_time(self):
-        self.led_time + "" +  str(self.get_next_signal()) #Legger til taller vi har skrevet inn i ledd helt til vi trykker *
+        self.led_time + "" + str(self.get_next_signal()) #Legger til taller vi har skrevet inn i ledd helt til vi trykker *
 
     def reset_led(self):
         self.led_time = ""
