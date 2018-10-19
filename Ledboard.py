@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 class Ledboard():
-    def __init__(self):
+    def __init__(self): #Set the proper mode via: GPIO.setmode(GPIO.BCM).
         self.pins = [18, 23, 24]  # Set the proper mode via: GPIO.setmode(GPIO.BCM).
         self.pin_led_states = [
             [1, 0, -1], # 1
@@ -27,29 +27,30 @@ class Ledboard():
             self.set_pin(pin_index, pin_state)
 
     def shut_off_lights(self):  # Skru av lys
-        for i in range (0,3):
+        for i in range(0,3):
             self.set_pin(i, 0)
 
+    #Turn on one of the 6 LEDs by making the appropriate combination of input and output
+    #declarations, and then making the appropriate HIGH / LOW settings on the output pins.
     def light_led(self, Lid, Ldur):  # Lys opp ett lys
-        # for pin_index, pin_state in enumerate(pin_led_states[led_number]):
-        # set_pin(pin_index, pin_state)
-
-        #TODO Light the led width the lednr from the input
+        for pin_index, pin_state in enumerate(self.pin_led_states[Lid]):
+            self.set_pin(pin_index, pin_state)
         self.turn_on_led(Lid)
-        print("Lights led",Lid,"for",Ldur,"sekunds")
+        print("Lights led", Lid, "for", Ldur, "sekunds")
         time.sleep(Ldur)
         self.shut_off_lights()
+        # TODO Light the led width the lednr from the input
 
-    def light_all(self,Ldur):  # Skru på alle lys
+    def light_all(self, Ldur):  # Skru på alle lys
         timeout = time.time() + Ldur
         while time.time() <= timeout:
-            for i in range(1,7):
+            for i in range(1, 7):
                 self.turn_on_led(i)
         self.shut_off_lights()
 
-    def flash_all_leds(self, flashes = 5, dif = 0.25): # Flah alle lys
+    def flash_all_leds(self, flashes=5, dif=0.25):  # Flash alle lys
         print("All leds flashing")
-        for i in range (0,flashes):
+        for i in range(0, flashes):
             self.light_all(dif)
             time.sleep(dif)
 
@@ -57,37 +58,44 @@ class Ledboard():
         timeout = time.time() + Ldur
         print("All leds twinkle")
         while time.time() <= timeout:
-            for i in range(1,7):
+            for i in range(1, 7):
                 self.light_led(i, 0.2)
         self.shut_off_lights()
 
-    def power_up(self):  # Start opp
-        for i in range (1,7):
-            self.light_led(i,0.2)
-        self.flash_all_leds(3,0.1)
+    def startup_leds(self):  # Start opp
+        for i in range(1, 7):
+            self.light_led(i, 0.2)
+        self.flash_all_leds(3, 0.1)
         print("Power upp animation")
 
-    def power_down(self):  # Slå av
-        self.flash_all_leds(3,0.1)
-        for i in range (1,7):
-            self.light_led(i,0.2)
+    def rightPassword_leds(self):  # !Right pass
+        for i in range(1, 7):
+            self.light_led(i, 0.1)
+
+    def exit_leds(self):  # Slå av
+        self.flash_all_leds(3, 0.1)
+        for i in range(1, 7):
+            self.light_led(i, 0.2)
         print("Power down animation")
         #TODO a sequence og lighting signaling power down
 
-# set_pin(0, -1)
-# set_pin(1, -1)
-# set_pin(2, -1)
-
-# while True:
-#   x = int(raw_input("Pin (0 to 5):"))
-#   light_led(x)
-
-#setup - Set the proper mode via: GPIO.setmode(GPIO.BCM).
-
-#• light led - Turn on one of the 6 LEDs by making the appropriate combination of input and output
-#declarations, and then making the appropriate HIGH / LOW settings on the output pins.
-
-#• flash all leds - Flash all 6 LEDs on and off for k seconds, where k is an argument of the method.
-
-#• twinkle all leds - Turn all LEDs on and off in sequence for k seconds, where k is an argument of the
-#method.
+    def test(self):
+        lB = Ledboard()
+        print("Lighting one")
+        lB.light_led(1, 1)
+        time.sleep(1)
+        print("Lighting all")
+        lB.light_all(3)
+        time.sleep(1)
+        print("Flashing all")
+        lB.flash_all_leds()
+        time.sleep(1)
+        print("Twinkling all")
+        lB.twinkle_all_leds(4)
+        time.sleep(1)
+        print("Power up")
+        lB.startup_leds()
+        time.sleep(1)
+        print("Power down")
+        lB.exit_leds()
+        time.sleep(1)

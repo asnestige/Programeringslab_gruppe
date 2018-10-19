@@ -27,18 +27,15 @@ class FSM:
                 break #Slutt å lete gjennom regler
 
     def apply_rule(self, rule, input): #check whether the conditions of a rule are met.
-        if self.fire_rule(rule, input):
+        if self.currentState == rule.state1 and rule.signal.contains(input):
+            self.fire_rule(rule, input)
             return True
         return False
 
     #use the consequent of a rule to a) set the next state of the FSM, and b) call the appropriate agent action method.
     def fire_rule(self, rule, input):
-        for i in range(len(rule)):
-            if self.currentState == rule[0] and rule[2].contains(input):
-                self.currentState = rule[1]
-                rule[3]() #????
-                return True
-        return False #Fant ingen regel ..
+            self.currentState = rule.state2
+            rule.action()
 
     #begin in the FSM’s default initial state and then repeatedly call get next signal and run rules until the FSM enters its default final state.
     def main_loop(self):
@@ -49,6 +46,7 @@ class makerules(FSM):
         super(FSM, self).__init__(agent)
         all_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '#']
         number_input = ['0', '1', '2', '3', '4', '5']
+
 
         #REGLER LOGG PÅ
         self.add_rule(rules("s-init", "s-read", all_input,  self.agent.startup)) #Starter opp og lys lyser

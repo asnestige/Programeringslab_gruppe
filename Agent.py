@@ -1,13 +1,15 @@
+from Keypad import Keypad as keypad
+from Ledboard import Ledboard as led
+
 class Agent:
     def __init__(self, keypad, led_board, passcode_buffer, pathname, Lid, Ldur):
         self.keypad = keypad #a pointer to the keypad
         self.led_board = led_board #pointer to the LED Board
-        self.passcode_buffer = passcode_buffer
+        self.temp_password = temp_password
         self.pathname = pathname  #pathname to the file holding the KPC’s password
         self.override_signal = None
         self.led_id = Lid  #slots for holding the LED id
         self.led_time = Ldur
-        self.temp_password = ""
 
     def activate_agent(self):
         return
@@ -24,7 +26,7 @@ class Agent:
         file = open("self.pathname.txt", "r")
         password = file.read()  #leser inn filen og oppretter en streng med ordene
         file.close()
-        if password == self.passcode_buffer: #sjekker om passordet lagret i filen er lik passordet tastet inn
+        if password == self.temp_password: #sjekker om passordet lagret i filen er lik passordet tastet inn
             self.override_signal = "Y"
             return True
         self.override_signal = "N"
@@ -37,11 +39,14 @@ class Agent:
 
     def startup(self): #Få lys til å blinke og reset password
         self.reset_password()
-        self.flash_leds()
+        self.led_board.startup_leds()
 
     def login(self): #Twinkle lights og verify login
         self.verify_login()
-        self.twinkle_leds()
+        self.led_board.rightPassword_leds()
+
+    def exit_action(self):
+        self.led_board.exit_leds()
 
     # PASSORD
     def init_passcode_entry(self):
@@ -49,19 +54,17 @@ class Agent:
         self.led_board.light_led()
 
     def add_symbol_password(self):
-        self.temp_password.append(keypad)  # Legg til det vi skriver inn i keypaden
+        self.temp_password + "" + str(self.get_next_signal())  # Legg til det vi skriver inn i keypaden
 
     def reset_password(self):
-        self.cach_password()
+        self.cach_password(self.temp_password)
 
     def clear_password(self):
         #for i in range(len(self.temp_password)):
            # self.temp_password.pop()
         self.temp_password = ""
 
-    def validate_password(self):
-
-    # Sjekker om elementene i temp_password er lik tallene i tekstfilen med passord
+    #Sjekker om elementene i temp_password er lik tallene i tekstfilen med passord
     def cach_password(self, password):  # SAVE NEW PASSWORD
         #  Lagre filen med nytt passord som ny tekstfil med passord
         f = open("self.pathname.txt", "w")
@@ -70,13 +73,13 @@ class Agent:
 
     #LYS
     def set_led_id(self):
-        self.led_id = keypad #Setter id til det vi har trykket på keypaden
+        self.led_id = self.get_next_signal() #Setter id til det vi har trykket på keypaden
 
     def set_led_time(self):
-        self.led_time += Int(keypad) #Legger til taller vi har skrevet inn i ledd helt til vi trykker *
+        self.led_time + "" +  str(self.get_next_signal()) #Legger til taller vi har skrevet inn i ledd helt til vi trykker *
 
     def reset_led(self):
-        self.led_time = 0
+        self.led_time = ""
 
     def light_one_led(self):
         self.led_board.light_led(self.led_id, self.led_time)
@@ -87,18 +90,11 @@ class Agent:
     def twinkle_leds(self):
         self.led_board.twinkle_all_leds(self.led_time)
 
-    def exit_action(self):
-        self.led_board.twinkle_all_leds(2) #Blinker i 2 sek
-        self.led_board.flash_all_leds(3) #Flash i 3 sek
-        self.led_board.twinkle_all_leds(2) #Blinker i 2 sek
-
-
 # • light one led - Using values stored in the Lid and Ldur slots, call the LED Board and request that
     # LED # Lid be turned on for Ldur seconds.
     # • flash leds - Call the LED Board and request the flashing of all LEDs.
     # • twinkle leds - Call the LED Board and request the twinkling of all LEDs.
     # • exit action - Call the LED Board to initiate the ”power down” lighting sequence
-
 
 #• init passcode entry - Clear the passcode-buffer and initiate a ”power up” lighting sequence on the LED
 #Board. This should be done when the user first presses the keypad.
@@ -116,8 +112,6 @@ class Agent:
 #• flash leds - Call the LED Board and request the flashing of all LEDs.
 #• twinkle leds - Call the LED Board and request the twinkling of all LEDs.
 #• exit action - Call the LED Board to initiate the ”power down” lighting sequence
-
-
 
 #• init passcode entry - Clear the passcode-buffer and initiate a ”power up” lighting sequence on the LED
 #Board. This should be done when the user first presses the keypad.
