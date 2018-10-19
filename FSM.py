@@ -53,17 +53,14 @@ class makerules(FSM):
         self.add_rule(rules("s-read", "s-verify", ['*'],   self.agent.login)) #Sjekker passord og får lys til å lyse
         self.add_rule(rules("s-read", "s-init", ['#'],  self.agent.null_action)) #Resetter agent
         self.add_rule(rules("s-read", "s-read", all_input, self.agent.add_symbol_password))  # Legger til et tall (input) i temp-passord
-        self.add_rule(rules("s-verify", "s-init", ['Fail'], self.agent.null_action)) #Hvis ikke passord er rett resettes agent og vi går tilbake til start
-        self.add_rule(rules("s-verify", "s-active", ['None'],  self.agent.activate_agent)) #Hvis passord er rett går vi videre til active og aktiverer agent
+        self.add_rule(rules("s-verify", "s-init", ['False'], self.agent.null_action)) #Hvis ikke passord er rett resettes agent og vi går tilbake til start
+        self.add_rule(rules("s-verify", "s-active", ['True'],  self.agent.activate_agent)) #Hvis passord er rett går vi videre til active og aktiverer agent
 
         #REGLER ENDRE PASSORD
         self.add_rule(rules("s-active", "s-read-2", ['*'], self.agent.clear_password)) #Starter å resette passord
         self.add_rule(rules("s-read-2", "s-active", ['#'], self.agent.null_action))  # Hvis ikke går vi tilbake til active
-        self.add_rule(rules("s-read-2", "s-active", ['*'], self.agent.null_action))  # Hvis ikke går vi tilbake til active
-        self.add_rule(rules("s-read-2", "s-read-2", all_input,  self.agent.add_symbol_password)) #Skriver inn tall som blir en del av nytt passord
-        self.add_rule(rules("s-read-3", "s-active", ['#'], self.agent.null_action)) #Skriver vi noe annet enn 0-9 eller * går vi ut og tilbake til active
-        self.add_rule(rules("s-read-3", "s-active", ['*'], self.agent.cach_password))  # Cacher det nye passordet
-        self.add_rule(rules("s-read-3", "s-read-3", all_input, self.agent.add_symbol_password))  # Legger til enda et tall i nytt passord
+        self.add_rule(rules("s-read-2", "s-active", ['*'], self.agent.cach_password))  # Cacher det nye passordet
+        self.add_rule(rules("s-read-2", "s-read-2", all_input, self.agent.add_symbol_password))  # Skriver inn tall som blir en del av nytt passord
 
         #REGLER LOGG AV
         self.add_rule(rules("s-active", "s-init", ['#'], self.agent.exit_action))  # Skriver # blir det lysshow og vi logger av, går tilbake

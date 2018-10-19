@@ -24,12 +24,12 @@ class Agent:
 
     def verify_login(self): #lese filen og sjekke om passordet stemmer
         file = open("self.pathname.txt", "r")
-        password = file.read()  #leser inn filen og oppretter en streng med ordene
+        password = file.read() #leser inn filen og oppretter en streng med ordene
         file.close()
         if password == self.temp_password: #sjekker om passordet lagret i filen er lik passordet tastet inn
-            self.override_signal = "Y"
+            self.override_signal = 'True'
             return True
-        self.override_signal = "N"
+        self.override_signal = 'False'
         return False
 
     def validate_passcode_change(self, password):
@@ -37,11 +37,10 @@ class Agent:
             return True
         return False
 
-    def startup(self): #Få lys til å blinke og reset password
-        self.reset_password()
+    def startup(self):  # Få lys til å blinke og reset password
         self.led_board.startup_leds()
 
-    def login(self): #Twinkle lights og verify login
+    def login(self):  # Twinkle lights og verify login
         self.verify_login()
         self.led_board.rightPassword_leds()
 
@@ -56,20 +55,17 @@ class Agent:
     def add_symbol_password(self):
         self.temp_password + "" + str(self.get_next_signal())  # Legg til det vi skriver inn i keypaden
 
-    def reset_password(self):
-        self.cach_password(self.temp_password)
+    #def reset_password(self):
+    #    self.cach_password()
 
     def clear_password(self):
-        #for i in range(len(self.temp_password)):
-           # self.temp_password.pop()
         self.temp_password = ""
 
-    #Sjekker om elementene i temp_password er lik tallene i tekstfilen med passord
-    def cach_password(self, password):  # SAVE NEW PASSWORD
-        #  Lagre filen med nytt passord som ny tekstfil med passord
-        f = open("self.pathname.txt", "w")
-        f.write(password)
-        f.close()
+    def cach_password(self):  # SAVE NEW PASSWORD
+        if self.validate_passcode_change(self.temp_password):
+            f = open("self.pathname.txt", "w")
+            f.write(self.temp_password)
+            f.close()
 
     #LYS
     def set_led_id(self):
