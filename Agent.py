@@ -1,7 +1,4 @@
-
-
 class Agent:
-
     def __init__(self, keypad, led_board, passcode_buffer, pathname, Lid, Ldur):
         self.keypad = keypad #a pointer to the keypad
         self.led_board = led_board #pointer to the LED Board
@@ -65,14 +62,11 @@ class Agent:
     def validate_password(self):
 
     # Sjekker om elementene i temp_password er lik tallene i tekstfilen med passord
-
     def cach_password(self, password):  # SAVE NEW PASSWORD
         #  Lagre filen med nytt passord som ny tekstfil med passord
         f = open("self.pathname.txt", "w")
         f.write(password)
         f.close()
-
-
 
     #LYS
     def set_led_id(self):
@@ -99,14 +93,11 @@ class Agent:
         self.led_board.twinkle_all_leds(2) #Blinker i 2 sek
 
 
-
 # • light one led - Using values stored in the Lid and Ldur slots, call the LED Board and request that
     # LED # Lid be turned on for Ldur seconds.
     # • flash leds - Call the LED Board and request the flashing of all LEDs.
     # • twinkle leds - Call the LED Board and request the twinkling of all LEDs.
     # • exit action - Call the LED Board to initiate the ”power down” lighting sequence
-
-
 
 
 #• init passcode entry - Clear the passcode-buffer and initiate a ”power up” lighting sequence on the LED
