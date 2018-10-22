@@ -2,14 +2,14 @@ from Keypad import Keypad as keypad
 from Ledboard import Ledboard as led
 
 class Agent:
-    def __init__(self, keypad, led_board, temp_password, pathname, Lid, Ldur):
+    def __init__(self, keypad, led_board, pathname):
         self.keypad = keypad  # a pointer to the keypad
         self.led_board = led_board  # pointer to the LED Board
-        self.temp_password = temp_password
+        self.temp_password = ""
         self.pathname = pathname  # pathname to the file holding the KPC’s password
         self.override_signal = None
-        self.led_id = Lid  # slots for holding the LED id
-        self.led_time = Ldur
+        self.led_id = ""  # slots for holding the LED id
+        self.led_time = ""
 
     def activate_agent(self):
         return

@@ -1,4 +1,6 @@
 from Agent import Agent as agent
+from Keypad import Keypad as keypad
+from Ledboard import Ledboard as ledboard
 
 class rules:
     def __init__(self, s1, s2, s, act):
@@ -85,5 +87,8 @@ class makerules(FSM):
                 break
 
     if __name__ == "__main__":
+        keypad = keypad()
+        ledboard = ledboard()
+        agent = agent(keypad,ledboard, "")
         fsm = FSM()
         fsm.main_loop()
