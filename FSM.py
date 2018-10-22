@@ -83,3 +83,6 @@ class makerules(FSM):
             self.run_rules(input)
             if self.currentState == "s-active" and input == '#':
                 break
+
+    if __name__ == "__main__":
+        main_loop()

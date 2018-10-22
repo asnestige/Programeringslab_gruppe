@@ -60,26 +60,3 @@ class Keypad:
             time.sleep(0.010)
 
         return key
-
-    #Finally, to avoid noisy inputs from the column pins, it helps to consider the column pin to be actually high
-#only if repeated measurements (for example, 20 in a row with a 10 millisecond delay between each reading)
-#all show a high value. You can use the time.sleep() command from Python’s time package to support this
-#simple (but very important) measure-wait-measure loop.
-
-#• get next signal - This is the main interface between the agent and the keypad. It should initiate
-#repeated calls to do polling until a key press is detected.
-
-
-
-
-
-#This is the main interface between the agent and the keypad. It should initiate
-#repeated calls to do polling until a key press is detected.
-
-
-#setup - Set the proper mode via: GPIO.setmode(GPIO.BCM). Also, use GPIO functions to set the
-#row pins as outputs and the column pins as inputs.
-#• do polling - Use nested loops (discussed above) to determine the key currently being pressed on the
-#keypad.
-#• get next signal - This is the main interface between the agent and the keypad. It should initiate
-#repeated calls to do polling until a key press is detected.
