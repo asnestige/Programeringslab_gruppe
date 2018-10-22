@@ -85,4 +85,5 @@ class makerules(FSM):
                 break
 
     if __name__ == "__main__":
-        main_loop()
+        fsm = FSM()
+        fsm.main_loop()
