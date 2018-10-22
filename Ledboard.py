@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import time
 
 class Ledboard():
@@ -13,14 +13,16 @@ class Ledboard():
             [-1, 0, 1], # 6
 
         ]
-        GPIO.setmode(GPIO.BCM)
+        #GPIO.setmode(GPIO.BCM)
 
     def set_pin(self, pin_index, pin_state):
+        """
         if pin_state == -1:
             GPIO.setup(self.pins[pin_index], GPIO.IN)
         else:
             GPIO.setup(self.pins[pin_index], GPIO.OUT)
             GPIO.output(self.pins[pin_index], pin_state)
+        """
 
     def turn_on_led(self, Lid):  # Skru på lys
         for pin_index, pin_state in enumerate(self.pin_led_states[Lid-1]):
@@ -71,13 +73,13 @@ class Ledboard():
     def rightPassword_leds(self):  # !Right pass
         for i in range(1, 7):
             self.light_led(i, 0.1)
+        print("Rigth password animation")
 
     def exit_leds(self):  # Slå av
         self.flash_all_leds(3, 0.1)
         for i in range(1, 7):
             self.light_led(i, 0.2)
         print("Power down animation")
-        #TODO a sequence og lighting signaling power down
 
     def test(self):
         lB = Ledboard()
@@ -99,3 +101,4 @@ class Ledboard():
         print("Power down")
         lB.exit_leds()
         time.sleep(1)
+
