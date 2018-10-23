@@ -57,7 +57,8 @@ class Agent:
         self.led_board.light_led()
 
     def add_symbol_password(self):
-        self.temp_password + "" + str(self.get_next_signal())  # Legg til det vi skriver inn i keypaden
+        print("Er inne her")
+        self.temp_password += str(self.get_next_signal())  # Legg til det vi skriver inn i keypaden
 
     def clear_password(self):
         self.temp_password = ""
