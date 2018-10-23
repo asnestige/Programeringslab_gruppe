@@ -64,7 +64,7 @@ class Agent:
             pass
         else:
             print("temp_password =", self.temp_password)
-            self.temp_password += str(signal)  # Legg til det vi skriver inn i keypaden
+            self.temp_password += str(self.signal)  # Legg til det vi skriver inn i keypaden
 
     def clear_password(self):
         self.temp_password = ""
