@@ -1,4 +1,4 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 
 class Ledboard():
@@ -13,16 +13,16 @@ class Ledboard():
             [-1, 0, 1], # 6
 
         ]
-        #GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(GPIO.BCM)
 
     def set_pin(self, pin_index, pin_state):
-        """
+
         if pin_state == -1:
             GPIO.setup(self.pins[pin_index], GPIO.IN)
         else:
             GPIO.setup(self.pins[pin_index], GPIO.OUT)
             GPIO.output(self.pins[pin_index], pin_state)
-        """
+
 
     def turn_on_led(self, Lid):  # Skru på lys
         for pin_index, pin_state in enumerate(self.pin_led_states[Lid-1]):

@@ -89,7 +89,7 @@ class makerules(FSM):
 
 
 if __name__ == "__main__":
-    print("Kjører")
+    #print("Kjører")
     keypad = Keypad()
     ledboard = Ledboard()
     agent = Agent(keypad, ledboard, "password.txt")
