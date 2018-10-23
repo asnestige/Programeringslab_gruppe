@@ -57,6 +57,7 @@ class Agent:
         self.led_board.light_led()
 
     def add_symbol_password(self):
+        print("get", self.get_next_signal())
         if self.get_next_signal() == '*' or self.get_next_signal() == '#':
             print("* eller #")
         else:
