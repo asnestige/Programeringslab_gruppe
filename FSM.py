@@ -79,7 +79,6 @@ class Makerules(FSM):
     # begin in the FSM’s default initial state and then repeatedly call get next signal and run rules until the FSM enters its default final state.
     def main_loop(self):
         self.currentState = "s-init"
-        print("Inne i main")
         while True: #not self.agent.exit:
             input = str(self.agent.get_next_signal())
             print("Input:", input)

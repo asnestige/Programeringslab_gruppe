@@ -61,6 +61,7 @@ class Agent:
         if self.get_next_signal() == '*' or self.get_next_signal() == '#':
             print("* eller #")
         else:
+            print("temp_password =", self.temp_password)
             self.temp_password += str(self.get_next_signal())  # Legg til det vi skriver inn i keypaden
 
     def clear_password(self):
