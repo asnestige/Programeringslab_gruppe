@@ -22,6 +22,7 @@ class Agent:
             return 'False'
         self.signal = self.keypad.get_next_signal()
         print("Input:", self.signal)
+        self.led_time = ""
         return self.signal
 
     def verify_login(self):  # lese filen og sjekke om passordet stemmer
@@ -82,7 +83,7 @@ class Agent:
         self.led_id = self.signal  # Setter id til det vi har trykket på keypaden
 
     def set_led_time(self): #ENDRE
-        self.led_time = str(self.signal)  # Legger til taller vi har skrevet inn i ledd helt til vi trykker *
+        self.led_time += str(self.signal)  # Legger til taller vi har skrevet inn i ledd helt til vi trykker *
 
     def reset_led(self):
         self.led_time = ""
