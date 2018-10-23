@@ -49,6 +49,8 @@ class Makerules(FSM):
     def __init__(self, agent):
         FSM.__init__(self, agent)
         all_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '#']
+        all_num_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        num_input = ['6', '7', '8', '9']
         number_input = ['0', '1', '2', '3', '4', '5']
 
 
@@ -56,7 +58,7 @@ class Makerules(FSM):
         self.add_rule(rules("s-init", "s-read", all_input,  self.agent.startup)) #Starter opp og lys lyser
         self.add_rule(rules("s-read", "s-active", ['*'],   self.agent.login)) #Sjekker passord og får lys til å lyse
         self.add_rule(rules("s-read", "s-init", ['#'],  self.agent.null_action)) #Resetter agent
-        self.add_rule(rules("s-read", "s-read", all_input, self.agent.add_symbol_password))  # Legger til et tall (input) i temp-passord
+        self.add_rule(rules("s-read", "s-read",  all_num_input, self.agent.add_symbol_password))  # Legger til et tall (input) i temp-passord
         self.add_rule(rules("s-active", "s-init", ['False'], self.agent.null_action)) #Hvis ikke passord er rett resettes agent og vi går tilbake til start
         #self.add_rule(rules("s-verify", "s-active", ['True'],  self.agent.activate_agent)) #Hvis passord er rett går vi videre til active og aktiverer agent
 
@@ -64,26 +66,26 @@ class Makerules(FSM):
         self.add_rule(rules("s-active", "s-read-2", ['*'], self.agent.clear_password)) #Starter å resette passord
         self.add_rule(rules("s-read-2", "s-active", ['#'], self.agent.null_action))  # Hvis ikke går vi tilbake til active
         self.add_rule(rules("s-read-2", "s-active", ['*'], self.agent.cach_password))  # Cacher det nye passordet
-        self.add_rule(rules("s-read-2", "s-read-2", all_input, self.agent.add_symbol_password))  # Skriver inn tall som blir en del av nytt passord
+        self.add_rule(rules("s-read-2", "s-read-2", all_num_input, self.agent.add_symbol_password))  # Skriver inn tall som blir en del av nytt passord
 
         #REGLER LOGG AV
         self.add_rule(rules("s-active", "s-init", ['#'], self.agent.exit_action))  # Skriver # blir det lysshow og vi logger av, går tilbake
 
         #REGLER STYRE LYS
         self.add_rule(rules("s-active", "s-ledligth", number_input, self.agent.set_led_id))  # Skriver inn et tall og kan gjøre denne mange ganger
-        self.add_rule(rules("s-active", "s-active", all_input, self.agent.null_action))  # Hvis vi trykker på 6 .. 9, * og # skal være lov
+        self.add_rule(rules("s-active", "s-active",  num_input, self.agent.null_action))  # Hvis vi trykker på 6 .. 9, * og # skal være lov
         self.add_rule(rules("s-ledligth", "s-active", ['*'], self.agent.light_one_led))  # Lyser rett led lys
         self.add_rule(rules("s-ledligth", "s-active", ['#'], self.agent.reset_led))  # Tilbake til active
-        self.add_rule(rules("s-ledligth", "s-ledligth", all_input, self.agent.set_led_time))
+        self.add_rule(rules("s-ledligth", "s-ledligth",  all_num_input, self.agent.set_led_time))
 
     # begin in the FSM’s default initial state and then repeatedly call get next signal and run rules until the FSM enters its default final state.
     def main_loop(self):
         self.currentState = "s-init"
         while True: #not self.agent.exit:
             print("Loop")
-            input = str(self.agent.get_next_signal())
-            print("Input:", input)
-
+            #input = str(self.agent.get_next_signal())
+            #print("Input:", input)
+            
             self.run_rules(input)
             if self.currentState == "s-active" and input == '#':
                 print("Ferdig")
