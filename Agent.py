@@ -57,7 +57,7 @@ class Agent:
         self.passcode_buffer = []
         self.led_board.light_led()
 
-    def add_symbol_password(self): #FEIL!!!!!!!
+    def add_symbol_password(self):
         print("get", self.signal)
         if self.signal == '*' or self.signal == '#':
             print("* eller #")
@@ -79,18 +79,10 @@ class Agent:
 
     #LYS
     def set_led_id(self): #ENDRE
-        if self.signal == '*' or self.signal == '#':
-            print("* eller #")
-            pass
-        else:
-            self.led_id = self.signal  # Setter id til det vi har trykket på keypaden
+        self.led_id = self.signal  # Setter id til det vi har trykket på keypaden
 
     def set_led_time(self): #ENDRE
-        if self.signal == '*' or self.signal == '#':
-            print("* eller #")
-            pass
-        else:
-            self.led_time += str(self.signal)  # Legger til taller vi har skrevet inn i ledd helt til vi trykker *
+        self.led_time = str(self.signal)  # Legger til taller vi har skrevet inn i ledd helt til vi trykker *
 
     def reset_led(self):
         self.led_time = ""
