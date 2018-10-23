@@ -61,8 +61,11 @@ class Agent:
         signal = self.get_next_signal()
         print("get", signal)
         if signal == '*' or signal == '#':
+            print("Inne i if")
             print("* eller #")
+            pass
         else:
+            print("Inne i else")
             print("temp_password =", self.temp_password)
             self.temp_password += str(signal)  # Legg til det vi skriver inn i keypaden
 
