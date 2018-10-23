@@ -9,6 +9,7 @@ class rules:
         self.signal = s #triggering signal
         self.action = act #the agent will be instructed to perform this action if this rule fires
 
+
 class FSM:
     def __init__(self, agent):
         self.rules = []
@@ -43,9 +44,10 @@ class FSM:
     def main_loop(self):
         pass
 
+
 class Makerules(FSM):
     def __init__(self, agent):
-        super(FSM, self).__init__(agent)
+        FSM.__init__(self, agent)
         all_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '#']
         number_input = ['0', '1', '2', '3', '4', '5']
 
