@@ -82,14 +82,14 @@ class Makerules(FSM):
     def main_loop(self):
         self.currentState = "s-init"
         while True: #not self.agent.exit:
-            print("Loop")
+            print("Ny knapp trykket")
+            print("State: ", self.currentState)
             input = str(self.agent.get_next_signal()) #DOBBELSJEKK DETTE
             self.run_rules(input)
 
             if self.currentState == "s-active" and input == '#':
                 print("Ferdig")
                 break
-
 
 if __name__ == "__main__":
     #print("Kjører")

@@ -19,7 +19,6 @@ class Keypad:
 
 
     def do_polling(self):
-
         match = False #variabel for å si ifra at vi har funnet en match
         keystring = "nokey"
 

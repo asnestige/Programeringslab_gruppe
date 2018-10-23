@@ -38,7 +38,7 @@ class Ledboard():
         for pin_index, pin_state in enumerate(self.pin_led_states[Lid]):
             self.set_pin(pin_index, pin_state)
         self.turn_on_led(Lid)
-        print("Lights led", Lid, "for", Ldur, "sekunds")
+        print("Lights led", Lid, "for", Ldur, "sekunder")
         time.sleep(Ldur)
         self.shut_off_lights()
 
