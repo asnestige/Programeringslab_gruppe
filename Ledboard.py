@@ -3,7 +3,7 @@ import time
 
 class Ledboard():
     def __init__(self): #Set the proper mode via: GPIO.setmode(GPIO.BCM).
-        self.pins = [18, 23, 24]  # Set the proper mode via: GPIO.setmode(GPIO.BCM).
+        self.pins = [13, 16, 26]  # Set the proper mode via: GPIO.setmode(GPIO.BCM).
         self.pin_led_states = [
             [1, 0, -1], # 1
             [0, 1, -1], # 2
