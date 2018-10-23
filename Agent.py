@@ -26,9 +26,9 @@ class Agent:
     def verify_login(self):  # lese filen og sjekke om passordet stemmer
         file = open(self.pathname, "r")
         password = file.read()  # leser inn filen og oppretter en streng med ordene
-        print("Passord = ", password)
+        print("Passord =", password)
         file.close()
-        print("Temppassord", self.temp_password)
+        print("Temp_passord =", self.temp_password)
         if password == self.temp_password:  # sjekker om passordet lagret i filen er lik passordet tastet inn
             self.override_signal = None
             return True
@@ -58,7 +58,7 @@ class Agent:
 
     def add_symbol_password(self):
         if self.get_next_signal() == '*' or self.get_next_signal() == '#':
-            pass
+            print("* eller #")
         else:
             self.temp_password += str(self.get_next_signal())  # Legg til det vi skriver inn i keypaden
 

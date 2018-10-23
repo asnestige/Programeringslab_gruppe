@@ -44,7 +44,6 @@ class Keypad:
 
         while count < 20: #må sjekke flere ganger for å være sikker på at det er et "ordentlig" trykk
             key = self.do_polling()
-
             if key != "No key": #har funnet en nøkkel
 
                 if prevkey == "base":
