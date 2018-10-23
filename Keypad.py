@@ -39,7 +39,7 @@ class Keypad:
 
     def get_next_signal(self):
         count = 0
-        prevkey = self.do_polling()
+        prevkey = "start"
         key = None
 
         while count < 20: #må sjekke flere ganger for å være sikker på at det er et "ordentlig" trykk
@@ -47,11 +47,15 @@ class Keypad:
 
             if key != "No key": #har funnet en nøkkel
 
-                if key == prevkey:
+                if prevkey == "base":
+                    prevkey = key
+                    count += 1
+
+                elif key == prevkey:
                     count += 1
 
                 else: #key != prevkey
-                    prevkey = key
+                    prevkey = "base"
                     count = 0
 
             time.sleep(0.010)
