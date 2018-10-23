@@ -20,6 +20,7 @@ class Agent:
     def get_next_signal(self):  # Return the override-signal, if it is non-blank; otherwise query the keypad for the next pressed key.
         if self.override_signal != None:
             self.override_signal = None
+            print("Inne i override")
             return 'False'
         return self.keypad.get_next_signal()
 
