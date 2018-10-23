@@ -84,10 +84,8 @@ class Makerules(FSM):
         while True: #not self.agent.exit:
             print("Loop")
             input = str(self.agent.get_next_signal()) #DOBBELSJEKK DETTE
-            agent.add_symbol_password(input)
-            print("Input:", input)
-
             self.run_rules(input)
+
             if self.currentState == "s-active" and input == '#':
                 print("Ferdig")
                 break

@@ -10,10 +10,7 @@ class Agent:
         self.override_signal = None
         self.led_id = ""  # slots for holding the LED id
         self.led_time = ""
-
-
-    def activate_agent(self):
-        return
+        self.signal = ""
 
     def null_action(self):  # Resetter agenten (?) og passord(?)
         pass
@@ -23,7 +20,9 @@ class Agent:
             self.override_signal = None
             print("Inne i override")
             return 'False'
-        return self.keypad.get_next_signal()
+        self.signal = self.keypad.get_next_signal()
+        print("Input:", self.signal)
+        return self.signal
 
     def verify_login(self):  # lese filen og sjekke om passordet stemmer
         file = open(self.pathname, "r")
@@ -59,9 +58,8 @@ class Agent:
         self.led_board.light_led()
 
     def add_symbol_password(self): #FEIL!!!!!!!
-        signal = self.get_next_signal()
-        print("get", signal)
-        if signal == '*' or signal == '#':
+        print("get", self.signal)
+        if self.signal == '*' or self.signal == '#':
             print("* eller #")
             pass
         else:
@@ -81,10 +79,18 @@ class Agent:
 
     #LYS
     def set_led_id(self): #ENDRE
-        self.led_id = self.get_next_signal()  # Setter id til det vi har trykket på keypaden
+        if self.signal == '*' or self.signal == '#':
+            print("* eller #")
+            pass
+        else:
+            self.led_id = self.signal  # Setter id til det vi har trykket på keypaden
 
     def set_led_time(self): #ENDRE
-        self.led_time + "" + str(self.get_next_signal())  # Legger til taller vi har skrevet inn i ledd helt til vi trykker *
+        if self.signal == '*' or self.signal == '#':
+            print("* eller #")
+            pass
+        else:
+            self.led_time += str(self.signal)  # Legger til taller vi har skrevet inn i ledd helt til vi trykker *
 
     def reset_led(self):
         self.led_time = ""
