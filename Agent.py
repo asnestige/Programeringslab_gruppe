@@ -57,18 +57,19 @@ class Agent:
         self.passcode_buffer = []
         self.led_board.light_led()
 
-    def add_symbol_password(self):
-        print("get", self.get_next_signal())
-        if self.get_next_signal() == '*' or self.get_next_signal() == '#':
+    def add_symbol_password(self): #FEIL!!!!!!!
+        signal = self.get_next_signal()
+        print("get", signal)
+        if signal == '*' or signal == '#':
             print("* eller #")
         else:
             print("temp_password =", self.temp_password)
-            self.temp_password += str(self.get_next_signal())  # Legg til det vi skriver inn i keypaden
+            self.temp_password += str(signal)  # Legg til det vi skriver inn i keypaden
 
     def clear_password(self):
         self.temp_password = ""
 
-    def cach_password(self):  # SAVE NEW PASSWORD
+    def cach_password(self):
         if self.validate_passcode_change(self.temp_password):
             f = open(self.pathname, "w")
             f.write(self.temp_password)
