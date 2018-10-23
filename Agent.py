@@ -57,7 +57,9 @@ class Agent:
         self.led_board.light_led()
 
     def add_symbol_password(self):
-        if self.get_next_signal() != '*' or self.get_next_signal() != '#':
+        if self.get_next_signal() == '*' or self.get_next_signal() == '#':
+            pass
+        else:
             self.temp_password += str(self.get_next_signal())  # Legg til det vi skriver inn i keypaden
 
     def clear_password(self):
