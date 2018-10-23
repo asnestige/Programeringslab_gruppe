@@ -6,7 +6,7 @@ class Agent:
         self.keypad = keypad  # a pointer to the keypad
         self.led_board = led_board  # pointer to the LED Board
         self.temp_password = ""
-        self.pathname = pathname  # pathname to the file holding the KPC’s password
+        self.pathname = pathname # pathname to the file holding the KPC’s password
         self.override_signal = None
         self.led_id = ""  # slots for holding the LED id
         self.led_time = ""
@@ -23,7 +23,7 @@ class Agent:
         return self.keypad.get_next_signal()
 
     def verify_login(self):  # lese filen og sjekke om passordet stemmer
-        file = open("self.pathname.txt", "r")
+        file = open(self.pathname, "r")
         password = file.read()  # leser inn filen og oppretter en streng med ordene
         file.close()
         if password == self.temp_password:  # sjekker om passordet lagret i filen er lik passordet tastet inn
@@ -61,7 +61,7 @@ class Agent:
 
     def cach_password(self):  # SAVE NEW PASSWORD
         if self.validate_passcode_change(self.temp_password):
-            f = open("self.pathname.txt", "w")
+            f = open(self.pathname, "w")
             f.write(self.temp_password)
             f.close()
             self.flash_leds()  # If password changed
