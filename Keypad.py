@@ -58,4 +58,5 @@ class Keypad:
                     count = 0
 
             time.sleep(0.010)
+        print("keypad key =", key)
         return key
