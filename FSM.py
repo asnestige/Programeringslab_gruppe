@@ -43,7 +43,7 @@ class FSM:
     def main_loop(self):
         pass
 
-class makerules(FSM):
+class Makerules(FSM):
     def __init__(self, agent):
         super(FSM, self).__init__(agent)
         all_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '#']
@@ -92,7 +92,8 @@ if __name__ == "__main__":
     #print("Kjører")
     keypad = Keypad()
     ledboard = Ledboard()
+
     agent = Agent(keypad, ledboard, "password.txt")
-    fsm = FSM(agent)
+    fsm = Makerules(agent)
     fsm.main_loop()
     print("hei")
