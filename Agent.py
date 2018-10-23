@@ -17,9 +17,10 @@ class Agent:
 
     def get_next_signal(self):  # Return the override-signal, if it is non-blank; otherwise query the keypad for the next pressed key.
         if self.override_signal != None:
+            temp = self.override_signal
             self.override_signal = None
             print("Inne i override")
-            return 'False'
+            return self.override_signal
         self.signal = self.keypad.get_next_signal()
         print("Input:", self.signal)
         self.led_time = ""
