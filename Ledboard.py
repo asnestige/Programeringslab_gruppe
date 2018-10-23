@@ -11,7 +11,7 @@ class Ledboard():
             [0, -1, 1], # 4
             [-1, 1, 0], # 5
             [-1, 0, 1], # 6
-
+            [-1,-1,-1]
         ]
         GPIO.setmode(GPIO.BCM)
 
