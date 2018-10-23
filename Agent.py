@@ -28,6 +28,7 @@ class Agent:
         password = file.read()  # leser inn filen og oppretter en streng med ordene
         print("Passord = ", password)
         file.close()
+        print("Temppassord", self.temp_password)
         if password == self.temp_password:  # sjekker om passordet lagret i filen er lik passordet tastet inn
             self.override_signal = None
             return True
