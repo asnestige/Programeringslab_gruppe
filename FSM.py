@@ -52,7 +52,7 @@ class Makerules(FSM):
         all_num_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         num_input = ['6', '7', '8', '9']
         number_input = ['0', '1', '2', '3', '4', '5']
-
+        input = ""
 
         #REGLER LOGG PÅ
         self.add_rule(rules("s-init", "s-read", all_input,  self.agent.startup)) #Starter opp og lys lyser
@@ -83,9 +83,10 @@ class Makerules(FSM):
         self.currentState = "s-init"
         while True: #not self.agent.exit:
             print("Loop")
-            #input = str(self.agent.get_next_signal())
-            #print("Input:", input)
-            
+            input = str(self.agent.get_next_signal()) #DOBBELSJEKK DETTE
+            agent.add_symbol_password(input)
+            print("Input:", input)
+
             self.run_rules(input)
             if self.currentState == "s-active" and input == '#':
                 print("Ferdig")
@@ -100,4 +101,3 @@ if __name__ == "__main__":
     agent = Agent(keypad, ledboard, "password.txt")
     fsm = Makerules(agent)
     fsm.main_loop()
-    print("hei")

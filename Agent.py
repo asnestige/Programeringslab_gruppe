@@ -11,6 +11,7 @@ class Agent:
         self.led_id = ""  # slots for holding the LED id
         self.led_time = ""
 
+
     def activate_agent(self):
         return
 
@@ -79,10 +80,10 @@ class Agent:
         self.twinkle_leds()  # If fail
 
     #LYS
-    def set_led_id(self):
+    def set_led_id(self): #ENDRE
         self.led_id = self.get_next_signal()  # Setter id til det vi har trykket på keypaden
 
-    def set_led_time(self):
+    def set_led_time(self): #ENDRE
         self.led_time + "" + str(self.get_next_signal())  # Legger til taller vi har skrevet inn i ledd helt til vi trykker *
 
     def reset_led(self):
