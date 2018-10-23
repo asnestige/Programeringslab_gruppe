@@ -30,7 +30,7 @@ class FSM:
                 break #Slutt å lete gjennom regler
 
     def apply_rule(self, rule, input): #check whether the conditions of a rule are met.
-        if self.currentState == rule.state1 and rule.signal.contains(input):
+        if self.currentState == rule.state1 and (input in rule.signal):
             self.fire_rule(rule, input)
             return True
         return False
