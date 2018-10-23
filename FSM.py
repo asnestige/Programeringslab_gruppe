@@ -80,6 +80,7 @@ class Makerules(FSM):
     def main_loop(self):
         self.currentState = "s-init"
         while True: #not self.agent.exit:
+            print("Loop")
             input = str(self.agent.get_next_signal())
             print("Input:", input)
 
