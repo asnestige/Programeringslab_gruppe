@@ -41,7 +41,6 @@ class Ledboard():
         print("Lights led", Lid, "for", Ldur, "sekunds")
         time.sleep(Ldur)
         self.shut_off_lights()
-        # TODO Light the led width the lednr from the input
 
     def light_all(self, Ldur):  # Skru på alle lys
         timeout = time.time() + Ldur
@@ -73,7 +72,7 @@ class Ledboard():
     def rightPassword_leds(self):  # !Right pass
         for i in range(1, 7):
             self.light_led(i, 0.1)
-        print("Rigth password animation")
+        print("Tried password animation")
 
     def exit_leds(self):  # Slå av
         self.flash_all_leds(3, 0.1)
