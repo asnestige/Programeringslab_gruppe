@@ -20,14 +20,14 @@ class Agent:
     def get_next_signal(self):  # Return the override-signal, if it is non-blank; otherwise query the keypad for the next pressed key.
         if self.override_signal != None:
             return self.override_signal
-        self.keypad.get_next_signal()
+        return self.keypad.get_next_signal()
 
     def verify_login(self):  # lese filen og sjekke om passordet stemmer
         file = open("self.pathname.txt", "r")
         password = file.read()  # leser inn filen og oppretter en streng med ordene
         file.close()
         if password == self.temp_password:  # sjekker om passordet lagret i filen er lik passordet tastet inn
-            self.override_signal = 'True'
+            self.override_signal = None
             return True
         self.override_signal = 'False'
         return False
