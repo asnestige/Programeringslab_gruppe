@@ -88,6 +88,7 @@ class Agent:
         self.led_time += str(self.signal)  # Legger til taller vi har skrevet inn i ledd helt til vi trykker *
 
     def reset_led(self):
+        print("Led_ligth is reset")
         self.led_time = ""
 
     def light_one_led(self):
