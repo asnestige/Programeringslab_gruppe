@@ -77,6 +77,7 @@ class Agent:
             f.close()
             self.flash_leds()  # If password changed
         self.twinkle_leds()  # If fail
+        self.reset_led()
 
     #LYS
     def set_led_id(self): #ENDRE

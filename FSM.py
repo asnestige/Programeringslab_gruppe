@@ -65,8 +65,8 @@ class Makerules(FSM):
         #REGLER ENDRE PASSORD
         self.add_rule(rules("s-active", "s-read-2", ['*'], self.agent.clear_password)) #Starter å resette passord
         self.add_rule(rules("s-read-2", "s-active", ['#'], self.agent.null_action))  # Hvis ikke går vi tilbake til active
-        self.add_rule(rules("s-read-2", "s-active", ['*'], self.agent.cach_password))  # Cacher det nye passordet
         self.add_rule(rules("s-read-2", "s-read-2", all_num_input, self.agent.add_symbol_password))  # Skriver inn tall som blir en del av nytt passord
+        self.add_rule(rules("s-read-2", "s-active", ['*'], self.agent.cach_password))  # Cacher det nye passordet
 
         #REGLER LOGG AV
         self.add_rule(rules("s-active", "s-init", ['#'], self.agent.exit_action))  # Skriver # blir det lysshow og vi logger av, går tilbake
