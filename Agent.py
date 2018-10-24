@@ -97,8 +97,8 @@ class Agent:
 
 
     def flash_leds(self):
-        self.led_board.flash_all_leds(int(self.led_time))
+        self.led_board.flash_all_leds(1)
 
     def twinkle_leds(self):
-        self.led_board.twinkle_all_leds(int(self.led_time))
+        self.led_board.twinkle_all_leds(1)
 
