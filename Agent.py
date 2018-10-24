@@ -20,7 +20,7 @@ class Agent:
             temp = self.override_signal
             self.override_signal = None
             print("Inne i override")
-            return self.override_signal
+            return temp
         self.signal = self.keypad.get_next_signal()
         print("Input:", self.signal)
         self.led_time = ""
