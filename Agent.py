@@ -20,13 +20,9 @@ class Agent:
             temp = self.override_signal
             self.override_signal = None
             print("Inne i override")
-            print(self.led_time)
             return temp
         self.signal = self.keypad.get_next_signal()
         print("Input:", self.signal)
-        print(self.led_time)
-        self.led_time = ""
-        print(self.led_time)
         return self.signal
 
     def verify_login(self):  # lese filen og sjekke om passordet stemmer
@@ -89,9 +85,7 @@ class Agent:
     def set_led_time(self): #ENDRE
         print("ledtime:", self.led_time)
         print("signal:", self.signal)
-
         self.led_time += str(self.signal)  # Legger til taller vi har skrevet inn i ledd helt til vi trykker *
-
 
     def reset_led(self):
         self.led_time = ""
