@@ -33,7 +33,7 @@ class Agent:
         file.close()
         print("Temp_passord =", self.temp_password)
         if password == self.temp_password:  # sjekker om passordet lagret i filen er lik passordet tastet inn
-            self.override_signal = None
+            self.override_signal = 'True'
             return True
         self.override_signal = 'False'
         return False
