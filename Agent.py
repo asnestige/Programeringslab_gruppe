@@ -20,10 +20,13 @@ class Agent:
             temp = self.override_signal
             self.override_signal = None
             print("Inne i override")
+            print(self.led_time)
             return temp
         self.signal = self.keypad.get_next_signal()
         print("Input:", self.signal)
+        print(self.led_time)
         self.led_time = ""
+        print(self.led_time)
         return self.signal
 
     def verify_login(self):  # lese filen og sjekke om passordet stemmer
