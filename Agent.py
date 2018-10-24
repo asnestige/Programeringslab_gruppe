@@ -84,13 +84,18 @@ class Agent:
         self.led_id = self.signal  # Setter id til det vi har trykket på keypaden
 
     def set_led_time(self): #ENDRE
+        print("ledtime:", self.led_time)
+        print("signal:", self.signal)
+
         self.led_time += str(self.signal)  # Legger til taller vi har skrevet inn i ledd helt til vi trykker *
+
 
     def reset_led(self):
         self.led_time = ""
 
     def light_one_led(self):
         self.led_board.light_led(int(self.led_id), int(self.led_time))
+
 
     def flash_leds(self):
         self.led_board.flash_all_leds(int(self.led_time))
