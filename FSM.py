@@ -74,9 +74,10 @@ class Makerules(FSM):
         #REGLER STYRE LYS
         self.add_rule(rules("s-active", "s-ledligth", number_input, self.agent.set_led_id))  # Skriver inn et tall og kan gjøre denne mange ganger
         self.add_rule(rules("s-active", "s-active",  num_input, self.agent.null_action))  # Hvis vi trykker på 6 .. 9, * og # skal være lov
+        self.add_rule(rules("s-ledligth", "s-ledligth", all_num_input, self.agent.set_led_time))
         self.add_rule(rules("s-ledligth", "s-active", ['*'], self.agent.light_one_led))  # Lyser rett led lys
         self.add_rule(rules("s-ledligth", "s-active", ['#'], self.agent.reset_led))  # Tilbake til active
-        self.add_rule(rules("s-ledligth", "s-ledligth",  all_num_input, self.agent.set_led_time))
+        
 
     # begin in the FSM’s default initial state and then repeatedly call get next signal and run rules until the FSM enters its default final state.
     def main_loop(self):
