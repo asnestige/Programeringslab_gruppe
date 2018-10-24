@@ -45,7 +45,7 @@ class Keypad:
             key = self.do_polling()
             if key != "No key": #har funnet en nøkkel
 
-                if prevkey == "base":
+                if prevkey == "start":
                     prevkey = key
                     count += 1
 
@@ -53,7 +53,7 @@ class Keypad:
                     count += 1
 
                 else: #key != prevkey
-                    prevkey = "base"
+                    prevkey = "start"
                     count = 0
 
             time.sleep(0.010)
